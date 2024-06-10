@@ -1,0 +1,17 @@
+# Используем официальный образ Nginx в качестве базового
+FROM nginx:latest
+
+# Устанавливаем переменную окружения для расположения файла конфигурации Nginx
+ENV NGINX_CONF_DIR /etc/nginx/conf.d
+
+# Копируем файл конфигурации Nginx в контейнер
+COPY ./config/nginx.conf $NGINX_CONF_DIR/default.conf
+
+# Копируем index.html в стандартную директорию Nginx
+COPY ./html/index.html /usr/share/nginx/html/index.html
+
+# Открываем порт 80 для веб-сервера
+EXPOSE 80
+
+# Указываем команду запуска Nginx
+CMD ["nginx", "-g", "daemon off;"]
